@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Skeleton } from 'antd';
 import styles from './Game.module.sass';
 import './index.sass';

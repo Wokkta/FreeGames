@@ -1,27 +1,19 @@
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
 import GameSquire from '../GameSquire';
 import styles from './Catalog.module.css';
+import { RootState } from '../../store';
+import { setGames } from '../../store/Slices/gamesSlice';
 
-interface Game {
-  title: string;
-  releaseDate?: string;
-  publisher?: string;
-  developer?: string;
-  genre: string;
-  thumbnail: string;
-  screenshots?: string[];
-  systemRequirements?: {
-    os: string;
-    processor: string;
-    memory: string;
-    graphics: string;
-    storage: string;
-  };
-}
 const Catalog: React.FC = () => {
-  const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useDispatch();
+  const Games = useSelector((state: RootState) => state.games);
 
+  useEffect(() => {
+    console.log(Games);
+  }, []);
   const maxRetryAttempts = 3; // Максимальное число попыток
   let retryCount = 0; // Счетчик попыток
 
@@ -38,7 +30,8 @@ const Catalog: React.FC = () => {
     try {
       const response = await fetch(url, options);
       const result = await response.json();
-      setGames(result);
+
+      dispatch(setGames(result));
       setLoading(false);
     } catch (error) {
       console.error('Error fetching games:', error);
@@ -55,13 +48,12 @@ const Catalog: React.FC = () => {
   useEffect(() => {
     console.clear();
     fetchGames();
-    (() => console.log(games))();
   }, []);
 
   return (
     <div className={styles.content}>
-      {games[0] ? (
-        games.map((game) => <GameSquire title={game.title} img={game.thumbnail} key={game.title} />)
+      {Games[1] ? (
+        Games.map((game) => <GameSquire title={game.title} img={game.thumbnail} key={game.title} />)
       ) : (
         <GameSquire title={'  '} loading={loading} />
       )}
