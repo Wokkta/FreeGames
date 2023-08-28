@@ -3,12 +3,12 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { Carousel, Button } from 'antd';
+import { Button } from 'antd';
 import './index.css';
 import styles from './Carousel.module.css';
 
 interface ScreenshotCarouselProps {
-  screenshots: string[];
+  screenshots: string[] | undefined;
 }
 
 const ScreenshotCarousel: React.FC<ScreenshotCarouselProps> = ({ screenshots }) => {
@@ -51,11 +51,15 @@ const ScreenshotCarousel: React.FC<ScreenshotCarouselProps> = ({ screenshots }) 
         icon={<LeftOutlined />}
       />
       <Slider ref={sliderRef} {...settings}>
-        {screenshots.map((screenshot: string, index: number) => (
-          <div key={index}>
-            <img src={screenshot} alt={`Screenshot ${index + 1}`} />
-          </div>
-        ))}
+        {screenshots ? (
+          screenshots.map((screenshot: string, index: number) => (
+            <div key={index}>
+              <img src={screenshot} alt={`Screenshot ${index + 1}`} />
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
       </Slider>
 
       <Button

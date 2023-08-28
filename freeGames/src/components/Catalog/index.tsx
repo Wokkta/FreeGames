@@ -52,10 +52,29 @@ const Catalog: React.FC = () => {
 
   return (
     <div className={styles.content}>
-      {Games[1] ? (
-        Games.map((game) => <GameSquire title={game.title} img={game.thumbnail} key={game.title} />)
+      {Games[2] ? (
+        Games.map((game) => (
+          <GameSquire
+            title={game.title}
+            img={game.thumbnail}
+            key={game.id}
+            id={game.id}
+            genre={game.genre}
+            release_date={game.release_date}
+            publisher={game.publisher}
+            loading={loading}
+          />
+        ))
       ) : (
-        <GameSquire title={'  '} loading={loading} />
+        <GameSquire
+          title={''}
+          img={''}
+          id={Infinity}
+          genre={''}
+          release_date={''}
+          publisher={''}
+          loading={loading}
+        />
       )}
     </div>
   );

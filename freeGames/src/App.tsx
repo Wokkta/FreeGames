@@ -1,17 +1,21 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
+import { RootState } from './store';
 import GamePage from './Pages/GamePage';
 import MainPage from './Pages/MainPage';
 import './App.css';
+import NotFound from './Pages/NotFound';
+
 function App() {
+  const Games = useSelector((state: RootState) => state.games);
   return (
     <>
       <Router>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="/game" element={<GamePage gameData={games[0]} />} />
-          <Route path="/game/:id" element={<GamePage gameData={games[0]} />} />
-          <Route path="*" element={<NoMatch />} />
+          <Route path="/game" element={<GamePage />} />
+          <Route path="/game/:id" element={<GamePage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </>
@@ -74,12 +78,3 @@ const games = [
     },
   },
 ];
-
-function NoMatch() {
-  return (
-    <div style={{ padding: 20 }}>
-      <h2>404: Page Not Found</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adip.</p>
-    </div>
-  );
-}

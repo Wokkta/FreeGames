@@ -1,17 +1,20 @@
 import { Button } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import ScreenshotCarousel from '../components/UI/ScreenshotCarousel';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 interface Game {
+  id: number;
   title: string;
-  releaseDate: string;
-  publisher: string;
-  developer: string;
+  release_date?: string;
+  publisher?: string;
+  developer?: string;
   genre: string;
-  image: string;
-  screenshots: string[];
-  systemRequirements: {
+  thumbnail: string;
+  screenshots?: string[];
+  systemRequirements?: {
     os: string;
     processor: string;
     memory: string;
@@ -20,24 +23,38 @@ interface Game {
   };
 }
 
-const GamePage: React.FC<{ gameData: Game }> = ({ gameData }) => {
+const GamePage: React.FC = () => {
+  const { id } = useParams();
+  const Games = useSelector((state: RootState) => state.games);
+  const ourId = id || Infinity;
+  if (ourId === Infinity) {
+    // Обработка случая, когда игра с указанным id не найдена
+    return <div>Game not found</div>;
+  }
+  const gameData: Game | undefined = Games.find((g) => g.id === +ourId);
+
   return (
     <div className="game-page" style={{ color: 'white', width: '100vw', minHeight: '100vh' }}>
       <Link to="/">
         <Button
-          className={`ant-btn-dark`} // Используем ant-btn-dark для темной темы
+          className={`ant-btn-dark`}
           onClick={() => console.log('gone to main page')}
           icon={<LeftOutlined />}
         />
       </Link>
+      {gameData ? (
+        <>
+          <ScreenshotCarousel screenshots={gameData.screenshots} />
 
-      <ScreenshotCarousel screenshots={gameData.screenshots} />
-
-      <h1>{gameData.title}</h1>
-      <p>Release Date: {gameData.releaseDate}</p>
-      <p>Publisher: {gameData.publisher}</p>
-      <p>Developer: {gameData.developer}</p>
-      <p>Genre: {gameData.genre}</p>
+          <h1>{gameData.title}</h1>
+          <p>Release Date: {gameData.release_date}</p>
+          <p>Publisher: {gameData.publisher}</p>
+          <p>Developer: {gameData.developer}</p>
+          <p>Genre: {gameData.genre}</p>
+        </>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

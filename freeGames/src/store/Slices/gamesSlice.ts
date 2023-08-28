@@ -2,14 +2,15 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
 export interface Game {
-    title: string;
-    releaseDate?: string;
-    publisher?: string;
-    developer?: string;
-    genre: string;
-    thumbnail: string;
-    screenshots?: string[];
-    systemRequirements?: {
+  id: number
+  title: string;
+  release_date?: string;
+  publisher?: string;
+  developer?: string;
+  genre: string;
+  thumbnail: string;
+  screenshots?: string[];
+  systemRequirements?: {
       os: string;
       processor: string;
       memory: string;
@@ -21,8 +22,9 @@ export interface Game {
 const initialState: Game[] = 
     [
         {
+          id: 1,
           title: 'The Fantasy Quest',
-          releaseDate: '15.10.2023',
+          release_date: '15.10.2023',
           publisher: 'Mystic Studios',
           developer: 'Adventure Game Studios',
           genre: 'Adventure',
@@ -62,6 +64,8 @@ export const gamesSlice = createSlice({
       var unique = prepCats.filter(onlyUnique);
 
       console.log(unique)
+      //console.clear()
+      console.log(action.payload)
         return action.payload;
       },
   },
