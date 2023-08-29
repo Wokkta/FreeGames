@@ -4,9 +4,12 @@ import './index.sass';
 import styles from './Carousel.module.sass';
 
 interface ScreenshotCarouselProps {
-  screenshots: string[] | undefined;
+  screenshots: screenshot[] | undefined;
 }
-
+interface screenshot {
+  image: string;
+  id: number;
+}
 const ScreenshotCarousel: React.FC<ScreenshotCarouselProps> = ({ screenshots }) => {
   return (
     <div className={styles.carouselContainer}>

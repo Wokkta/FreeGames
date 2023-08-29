@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { RootState } from '../../store';
+
 import ScreenshotCarousel from '../UI/ScreenshotCarousel';
 import { GameDesc } from '..';
 import styles from './GameContent.module.sass';
@@ -13,7 +13,7 @@ interface Game {
   developer: string;
   genre: string;
   thumbnail: string;
-  screenshots?: string[];
+  screenshots?: screenshot[];
   systemRequirements?: {
     os: string;
     processor: string;
@@ -22,7 +22,10 @@ interface Game {
     storage: string;
   };
 }
-
+interface screenshot {
+  image: string;
+  id: number;
+}
 type GameContentProps = {
   id: string;
 };
