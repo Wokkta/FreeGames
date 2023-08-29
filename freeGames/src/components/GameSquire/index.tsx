@@ -39,7 +39,7 @@ const GameSquire: React.FC<CardInfo> = ({
   }
 
   return (
-    <Link to={`/game/${id}`}>
+    <Link to={`/game/${id}`} className={styles.Link}>
       <div
         className={styles.cover}
         onClick={() => {
