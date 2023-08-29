@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -35,7 +34,7 @@ const GameContent: React.FC<GameContentProps> = ({ id }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let gameData = localStorage.getItem('game');
+      //let gameData = localStorage.getItem('game');
       const fetchedGameData = await fetchGame();
       await setGame(fetchedGameData);
       /*

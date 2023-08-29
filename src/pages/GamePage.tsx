@@ -9,7 +9,7 @@ const GamePage: React.FC = () => {
   return (
     <div className="game-page" style={{ color: 'white', width: '100vw', minHeight: '100vh' }}>
       <GamePageHeader />
-      <GameContent id={id} />
+      <GameContent id={id || ''} />
     </div>
   );
 };
