@@ -1,72 +1,36 @@
-import { useRef } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import './index.css';
-import styles from './Carousel.module.css';
+import { Carousel } from 'antd';
+
+import './index.sass';
+import styles from './Carousel.module.sass';
 
 interface ScreenshotCarouselProps {
   screenshots: string[] | undefined;
 }
 
 const ScreenshotCarousel: React.FC<ScreenshotCarouselProps> = ({ screenshots }) => {
-  const sliderRef = useRef<Slider>(null);
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 1,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 1200,
-        settings: {
-          slidesToShow: 3,
-        },
-      },
-    ],
-  };
-
   return (
     <div className={styles.carouselContainer}>
-      <Button
-        className={`${styles.prevButton} ant-btn-dark`} // Используем ant-btn-dark для темной темы
-        onClick={() => sliderRef.current?.slickPrev()}
-        icon={<LeftOutlined />}
-      />
-      <Slider ref={sliderRef} {...settings}>
-        {screenshots ? (
-          screenshots.map((screenshot: string, index: number) => (
+      <Carousel
+        autoplay
+        pauseOnHover={true}
+        pauseOnDotsHover={true}
+        draggable
+        className={styles.carousel}
+        adaptiveHeight>
+        {screenshots && screenshots.length > 0 ? (
+          screenshots.map((screenshot, index) => (
             <div key={index}>
-              <img src={screenshot} alt={`Screenshot ${index + 1}`} />
+              <img
+                src={screenshot.image}
+                alt={`Screenshot ${index + 1}`}
+                className={styles.carouselImage}
+              />
             </div>
           ))
         ) : (
           <></>
         )}
-      </Slider>
-
-      <Button
-        className={`${styles.nextButton} ant-btn-dark`} // Используем ant-btn-dark для темной темы
-        onClick={() => sliderRef.current?.slickNext()}
-        icon={<RightOutlined />}
-      />
+      </Carousel>
     </div>
   );
 };

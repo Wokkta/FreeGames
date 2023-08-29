@@ -1,6 +1,5 @@
 import { Pagination } from 'antd';
-import { CatalogSorting } from '../components';
-import Catalog from '../components/Catalog';
+import { Catalog, CatalogSorting } from '../components';
 
 function MainPage() {
   return (

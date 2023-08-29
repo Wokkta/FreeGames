@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Skeleton } from 'antd';
 import styles from './Game.module.sass';
-import './index.sass';
+
 import Meta from 'antd/es/card/Meta';
 import { Link } from 'react-router-dom';
 
@@ -47,13 +47,14 @@ const GameSquire: React.FC<CardInfo> = ({
         }}>
         <Card
           className={styles.card}
-          cover={<img alt={loading ? '' : 'No game found'} src={img} />}
-          style={id === Infinity ? { paddingLeft: '20px' } : {}}>
+          cover={<img alt={loading ? '' : 'No game found'} src={img} />}>
           <Skeleton loading={loading} avatar active>
-            <Meta title={title} />
-            <p>{release_date ? reverseDate(release_date) : ''}</p>
-            <p>{publisher}</p>
-            <p>{genre}</p>
+            <div className={styles.cardContent}>
+              <Meta title={title} />
+              <p>{release_date ? reverseDate(release_date) : ''}</p>
+              <p>{publisher}</p>
+              <p>{genre}</p>
+            </div>
           </Skeleton>
         </Card>
       </div>

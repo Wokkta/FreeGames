@@ -50,7 +50,7 @@ export const gamesSlice = createSlice({
   reducers: {
     
     
-    setGames: (state, action: PayloadAction<Game[]>) => {
+    setGames: (_state, action: PayloadAction<Game[]>) => {
       
       const cats = action.payload.map(game=>game.genre)
       const prepCats = cats.concat()

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import GameSquire from '../GameSquire';
-import styles from './Catalog.module.css';
+import styles from './Catalog.module.sass';
 import { RootState } from '../../store';
 import { setGames } from '../../store/Slices/gamesSlice';
+import { GameSquire } from '..';
 
 const Catalog: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
