@@ -5,6 +5,7 @@ import styles from './Catalog.module.sass';
 import { RootState } from '../../store';
 
 import { GameSquire } from '..';
+import { Alert, Card, Skeleton } from 'antd';
 
 const Catalog: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -16,11 +17,11 @@ const Catalog: React.FC = () => {
     console.log(Games);
   }, []);
   useEffect(() => {
-    if (Games.length > 1) setLoading(false);
+    if (Games.length > 0) setLoading(false);
   }, [Games]);
   return (
     <div className={styles.content}>
-      {Games[2] ? (
+      {Games.length > 1 ? (
         Games.map((game) => (
           <GameSquire
             title={game.title}
@@ -33,16 +34,34 @@ const Catalog: React.FC = () => {
             loading={loading}
           />
         ))
-      ) : (
-        <GameSquire
-          title={''}
-          img={''}
-          id={Infinity}
-          genre={''}
-          release_date={''}
-          publisher={''}
-          loading={loading}
+      ) : Games.length === 1 ? (
+        <Alert
+          message="Error 404 No such page found"
+          description="We can't get games data from the server. Please reload the page. If not working, try again or connect developers"
+          type="error"
+          closable
         />
+      ) : (
+        <>
+          <Card className={styles.loadingCard}>
+            <Skeleton active={!loading} />
+          </Card>
+          <Card className={styles.loadingCard}>
+            <Skeleton active={!loading} />
+          </Card>
+          <Card className={styles.loadingCard}>
+            <Skeleton active={!loading} />
+          </Card>
+          <Card className={styles.loadingCard}>
+            <Skeleton active={!loading} />
+          </Card>
+          <Card className={styles.loadingCard}>
+            <Skeleton active={!loading} />
+          </Card>
+          <Card className={styles.loadingCard}>
+            <Skeleton active={!loading} />
+          </Card>
+        </>
       )}
     </div>
   );

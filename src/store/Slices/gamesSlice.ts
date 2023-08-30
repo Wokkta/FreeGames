@@ -21,27 +21,7 @@ export interface Game {
 
 const initialState: Game[] = 
     [
-        {
-          id: 1,
-          title: 'The Fantasy Quest',
-          release_date: '15.10.2023',
-          publisher: 'Mystic Studios',
-          developer: 'Adventure Game Studios',
-          genre: 'Adventure',
-          thumbnail: 'fantasy_quest_poster.jpg',
-          screenshots: [
-            'https://i.ytimg.com/vi/OEV8UK_Nn-w/maxresdefault.jpg',
-            'https://i.ytimg.com/vi/OEV8UK_Nn-w/maxresdefault.jpg',
-            'https://i.ytimg.com/vi/OEV8UK_Nn-w/maxresdefault.jpg',
-          ],
-          systemRequirements: {
-            os: 'Windows 10',
-            processor: 'Intel Core i5',
-            memory: '8 GB RAM',
-            graphics: 'NVIDIA GeForce GTX 1060',
-            storage: '20 GB available space',
-          },
-        }]
+        ]
 
 
 export const gamesSlice = createSlice({
@@ -71,7 +51,6 @@ export const gamesSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { setGames} = gamesSlice.actions
 
 export default gamesSlice.reducer
