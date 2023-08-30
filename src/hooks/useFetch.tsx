@@ -32,6 +32,9 @@ const useFetch = (initialOptions: FetchOptionsState) => {
           fetchGames(options);
         } else {
           console.error(`Max retry attempts (${maxRetryAttempts}) reached.`);
+          alert(
+            `Retrying (${maxRetryAttempts}) reached please try again later or contact the administrator`,
+          );
         }
       }
     };

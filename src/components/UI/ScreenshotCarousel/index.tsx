@@ -1,4 +1,4 @@
-import { Carousel } from 'antd';
+import { Carousel, Image } from 'antd';
 
 import './index.sass';
 import styles from './Carousel.module.sass';
@@ -18,14 +18,15 @@ const ScreenshotCarousel: React.FC<ScreenshotCarouselProps> = ({ screenshots }) 
         pauseOnHover={true}
         pauseOnDotsHover={true}
         draggable
-        className={styles.carousel}
-        adaptiveHeight>
+        adaptiveHeight
+        className={styles.carousel}>
         {screenshots && screenshots.length > 0 ? (
           screenshots.map((screenshot, index) => (
             <div key={index}>
-              <img
+              <Image
+                preview={false}
                 src={screenshot.image}
-                alt={`Screenshot ${index + 1}`}
+                alt={`Screenshot ${index + 1}`} // Исправьте на бэктики
                 className={styles.carouselImage}
               />
             </div>

@@ -5,3 +5,35 @@
     height: 90vh
     width: 100vw
     flex-wrap: wrap
+.carousel
+    display: flex
+    flex-wrap: wrap
+    align-items: flex-start
+    justify-content: flex-start
+
+// Стили для изображений в слайдере
+    &-image
+        width: 100%
+
+// Стили для мобильного варианта
+@media screen and (max-width: 768px)
+.carousel
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+    &-image
+        width: auto
+        height: auto
+        max-width: 100%
+        max-height: 100%
+
+.thumbnail
+    width: 100%
+    height: auto
+
+// Стили для мобильного варианта
+@media screen and (max-width: 768px)
+.thumbnail
+    max-width: 100%
+    max-height: 100%

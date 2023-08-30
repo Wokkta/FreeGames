@@ -1,5 +1,5 @@
-import { Descriptions } from 'antd';
-
+import { Descriptions, Divider, Typography } from 'antd';
+import styles from './GameDesc.module.sass';
 import type { DescriptionsProps } from 'antd';
 
 interface GameDescInfo {
@@ -8,9 +8,18 @@ interface GameDescInfo {
   publisher: string;
   developer: string;
   genre: string;
+  description: string;
 }
 
-const GameDesc: React.FC<GameDescInfo> = ({ title, release_date, publisher, developer, genre }) => {
+const GameDesc: React.FC<GameDescInfo> = ({
+  title,
+  release_date,
+  publisher,
+  developer,
+  genre,
+  description,
+}) => {
+  console.log(description);
   const items: DescriptionsProps['items'] = [
     {
       key: '5',
@@ -40,8 +49,10 @@ const GameDesc: React.FC<GameDescInfo> = ({ title, release_date, publisher, deve
   ];
   return (
     <>
-      <div style={{ flexGrow: 1 }}>
-        <Descriptions title="Game Info" items={items} />
+      <div className={styles.container}>
+        <Descriptions title="Game Info" items={items} className={styles.descriptions} />
+        <Divider />
+        <Typography className={styles.typography}>{description}</Typography>
       </div>
       ;
     </>

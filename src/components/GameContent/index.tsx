@@ -4,6 +4,8 @@ import axios from 'axios';
 import ScreenshotCarousel from '../UI/ScreenshotCarousel';
 import { GameDesc } from '..';
 import styles from './GameContent.module.sass';
+import { Image } from 'antd';
+
 interface Game {
   id: number;
   title: string;
@@ -20,11 +22,15 @@ interface Game {
     graphics: string;
     storage: string;
   };
+  timestamp?: number;
+  description: string;
 }
+
 interface screenshot {
   image: string;
   id: number;
 }
+
 type GameContentProps = {
   id: string;
 };
@@ -34,45 +40,55 @@ const GameContent: React.FC<GameContentProps> = ({ id }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      //let gameData = localStorage.getItem('game');
-      const fetchedGameData = await fetchGame();
-      await setGame(fetchedGameData);
-      /*
-      if (!gameData) {
-        try {
-          const fetchedGameData = await fetchGame();
-          gameData = JSON.stringify(fetchedGameData);
-          localStorage.setItem('game', gameData);
-        } catch (error) {
-          console.error(error);
-          return;
+      let storedGame: Game | null = null;
+      const storedGameString = localStorage.getItem(`game_${id}`);
+      if (storedGameString) {
+        storedGame = JSON.parse(storedGameString);
+        const storedTimestamp = storedGame.timestamp;
+        const currentTimestamp = new Date().getTime();
+        const fiveMinutes = 5 * 60 * 1000;
+
+        if (currentTimestamp - storedTimestamp > fiveMinutes) {
+          storedGame = await fetchGame();
+          storedGame.timestamp = currentTimestamp;
+          localStorage.setItem(`game_${id}`, JSON.stringify(storedGame));
         }
+      } else {
+        storedGame = await fetchGame();
+        storedGame.timestamp = new Date().getTime();
+        localStorage.setItem(`game_${id}`, JSON.stringify(storedGame));
       }
 
-      const parsedGameData: Game = await JSON.parse(gameData);
-      await setGame(parsedGameData);
-      */
+      setGame(storedGame);
     };
 
     fetchData();
   }, []);
 
   const fetchGame = async () => {
+    let attempts = 3;
     try {
-      const response = await axios.get(
-        `https://free-to-play-games-database.p.rapidapi.com/api/game?id=${id}`,
-        {
-          headers: {
-            'X-RapidAPI-Key': '2206ee3d34msh12d125ce21f758ep1f37d6jsn7613baf538d4',
-            'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+      while (attempts > 0) {
+        const response = await axios.get(
+          `https://free-to-play-games-database.p.rapidapi.com/api/game?id=${id}`,
+          {
+            headers: {
+              'X-RapidAPI-Key': '2206ee3d34msh12d125ce21f758ep1f37d6jsn7613baf538d4',
+              'X-RapidAPI-Host': 'free-to-play-games-database.p.rapidapi.com',
+            },
           },
-        },
-      );
+        );
 
-      console.log(response.data);
-      return response.data;
+        console.log(response.data);
+        return response.data;
+      }
     } catch (error) {
-      console.error(error);
+      attempts--;
+
+      if (attempts === 0) {
+        alert('Ошибка при выполнении запроса');
+        console.error(error);
+      }
     }
   };
 
@@ -80,7 +96,10 @@ const GameContent: React.FC<GameContentProps> = ({ id }) => {
     <div className={styles.content}>
       {game ? (
         <>
-          <ScreenshotCarousel screenshots={game.screenshots} />
+          <>
+            <ScreenshotCarousel screenshots={game.screenshots} />
+            <Image className={styles.thumbnail} src={game.thumbnail} />
+          </>
 
           <GameDesc
             title={game.title}
@@ -88,6 +107,7 @@ const GameContent: React.FC<GameContentProps> = ({ id }) => {
             publisher={game.publisher}
             release_date={game.release_date}
             developer={game.developer}
+            description={game.description}
           />
         </>
       ) : (
