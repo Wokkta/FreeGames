@@ -1,16 +1,13 @@
+import { Alert } from 'antd';
+
 const NotFound: React.FC = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        width: '100vw',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      <h2>404: Page Not Found</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adip.</p>
-    </div>
+    <Alert
+      message="Error 404 No such page found"
+      description="We can't get games data from the server. Please reload the page. If not working, try again or connect developers"
+      type="error"
+      closable
+    />
   );
 };
 export default NotFound;

@@ -44,18 +44,18 @@ const GameContent: React.FC<GameContentProps> = ({ id }) => {
       const storedGameString = localStorage.getItem(`game_${id}`);
       if (storedGameString) {
         storedGame = JSON.parse(storedGameString);
-        const storedTimestamp = storedGame.timestamp;
+        const storedTimestamp = storedGame?.timestamp;
         const currentTimestamp = new Date().getTime();
         const fiveMinutes = 5 * 60 * 1000;
 
-        if (currentTimestamp - storedTimestamp > fiveMinutes) {
+        if (storedTimestamp && currentTimestamp - storedTimestamp > fiveMinutes) {
           storedGame = await fetchGame();
-          storedGame.timestamp = currentTimestamp;
+          if (storedGame) storedGame.timestamp = currentTimestamp;
           localStorage.setItem(`game_${id}`, JSON.stringify(storedGame));
         }
       } else {
         storedGame = await fetchGame();
-        storedGame.timestamp = new Date().getTime();
+        if (storedGame) storedGame.timestamp = new Date().getTime();
         localStorage.setItem(`game_${id}`, JSON.stringify(storedGame));
       }
 
@@ -63,7 +63,7 @@ const GameContent: React.FC<GameContentProps> = ({ id }) => {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   const fetchGame = async () => {
     let attempts = 3;
@@ -92,27 +92,24 @@ const GameContent: React.FC<GameContentProps> = ({ id }) => {
     }
   };
 
+  if (!game) {
+    return null;
+  }
+
   return (
     <div className={styles.content}>
-      {game ? (
-        <>
-          <>
-            <ScreenshotCarousel screenshots={game.screenshots} />
-            <Image className={styles.thumbnail} src={game.thumbnail} />
-          </>
-
-          <GameDesc
-            title={game.title}
-            genre={game.genre}
-            publisher={game.publisher}
-            release_date={game.release_date}
-            developer={game.developer}
-            description={game.description}
-          />
-        </>
-      ) : (
-        <></>
-      )}
+      <ScreenshotCarousel screenshots={game.screenshots} />
+      <div className={styles.info}>
+        <Image className={styles.thumbnail} src={game.thumbnail} preview={false} />
+        <GameDesc
+          title={game.title}
+          genre={game.genre}
+          publisher={game.publisher}
+          release_date={game.release_date}
+          developer={game.developer}
+          description={game.description}
+        />
+      </div>
     </div>
   );
 };

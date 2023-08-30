@@ -15,7 +15,9 @@ const Catalog: React.FC = () => {
     console.clear();
     console.log(Games);
   }, []);
-
+  useEffect(() => {
+    if (Games.length > 1) setLoading(false);
+  }, [Games]);
   return (
     <div className={styles.content}>
       {Games[2] ? (
