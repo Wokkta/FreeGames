@@ -28,24 +28,8 @@ export const gamesSlice = createSlice({
   name: 'games',
   initialState,
   reducers: {
-    
-    
+
     setGames: (_state, action: PayloadAction<Game[]>) => {
-      
-      const cats = action.payload.map(game=>game.genre)
-      const prepCats = cats.concat()
-
-      function onlyUnique(value:string, index:number, array:string[]) {
-        return array.indexOf(value) === index;
-      }
-      
-
-      
-      var unique = prepCats.filter(onlyUnique);
-
-      console.log(unique)
-      //console.clear()
-      console.log(action.payload)
         return action.payload;
       },
   },

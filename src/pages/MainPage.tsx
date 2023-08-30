@@ -1,4 +1,3 @@
-import { Pagination } from 'antd';
 import { Catalog, CatalogSorting } from '../components';
 
 function MainPage() {
@@ -6,7 +5,6 @@ function MainPage() {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <CatalogSorting />
       <Catalog />
-      <Pagination simple defaultCurrent={2} total={50} />
     </div>
   );
 }

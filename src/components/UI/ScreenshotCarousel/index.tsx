@@ -15,8 +15,7 @@ interface screenshot {
 
 const ScreenshotCarousel: React.FC<ScreenshotCarouselProps> = ({ screenshots }) => {
   useEffect(() => {
-    // Логика, которая будет выполнена при изменении screenshots
-    console.log('Screenshots have changed:', screenshots);
+    //console.log('Screenshots have changed:', screenshots);
   }, [screenshots]);
 
   return (

@@ -9,6 +9,13 @@ interface GameDescInfo {
   developer: string;
   genre: string;
   description: string;
+  systemRequirements: {
+    os: string;
+    processor: string;
+    memory: string;
+    graphics: string;
+    storage: string;
+  };
 }
 
 const GameDesc: React.FC<GameDescInfo> = ({
@@ -18,8 +25,13 @@ const GameDesc: React.FC<GameDescInfo> = ({
   developer,
   genre,
   description,
+  systemRequirements,
 }) => {
-  console.log(description);
+  function reverseDate(dateString: string) {
+    const [year, month, day] = dateString.split('-');
+    return `${day}.${month}.${year}`;
+  }
+  //console.log(description);
   const items: DescriptionsProps['items'] = [
     {
       key: '5',
@@ -29,7 +41,7 @@ const GameDesc: React.FC<GameDescInfo> = ({
     {
       key: '1',
       label: 'Release Date',
-      children: release_date,
+      children: release_date ? reverseDate(release_date) : '',
     },
     {
       key: '2',
@@ -47,14 +59,42 @@ const GameDesc: React.FC<GameDescInfo> = ({
       children: genre,
     },
   ];
+
+  const requirements: DescriptionsProps['items'] = [
+    {
+      key: '5',
+      label: 'OS',
+      children: systemRequirements?.os,
+    },
+    {
+      key: '1',
+      label: 'Memory',
+      children: systemRequirements?.memory,
+    },
+    {
+      key: '2',
+      label: 'Processor',
+      children: systemRequirements?.processor,
+    },
+    {
+      key: '3',
+      label: 'Storage',
+      children: systemRequirements?.storage,
+    },
+  ];
   return (
     <>
       <div className={styles.container}>
         <Descriptions title="Game Info" items={items} className={styles.descriptions} />
         <Divider />
+        <Descriptions
+          title="System Requirements"
+          items={requirements}
+          className={styles.descriptions}
+        />
+        <Divider />
         <Typography className={styles.typography}>{description}</Typography>
       </div>
-      ;
     </>
   );
 };
